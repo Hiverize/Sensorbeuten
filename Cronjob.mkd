@@ -1,0 +1,25 @@
+<big>Cronjob</big>
+
+Die Skripte für die Messungen werden über einen Cronjob aufgerufen. 
+Cron ist ein Linux-Werkzeug für das Erstellen und Bearbeiten zietlich festgelegter Tasks. 
+Es wird dafür genutzt, Skripte fahrplanmäßig zu festen Zeiten aufzurufen.
+
+Für Menschen, die gerne graphische Oberflächen mögen, gibt es diese Möglichkeit:
+sudo apt-get install gnome-schedule
+
+Jede*r Nutzer*in (auch root) hat einen eigenen Crontab. Dort steht in einer Liste, welche Tasks wann ausgeführt werden sollen. 
+Über die Konsole wird ein Crontab mit folgendem Befehl editiert:
+
+crontab -e
+
+Hier ist eine Anleitung für das Erstellen eines neuen Cronjobs. 
+https://raspberry.tips/raspberrypi-einsteiger/cronjob-auf-dem-raspberry-pi-einrichten/
+
+
+Für die Messung von Temperatur und Feuchte haben wir uns für ein Messintervall von 1 Minute entschieden. 
+
+Daher ist unser Cronjob (vom User pi ausgeführt):
+~~~~
+*/1 * * * *   pi /home/pi/Sensorbeute/Sensoren/temperatureHumidity.py
+~~~~
+Bitte passt den Pfad zu euren Skripten entsprechend an :)
