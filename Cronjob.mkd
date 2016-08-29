@@ -24,6 +24,6 @@ Für die Messung von Temperatur und Feuchte haben wir uns für ein Messintervall
 
 Daher ist unser Cronjob (von root ausgeführt, damit wir Zugriff auf die GPIO haben):
 ~~~~
-* * * * *   root  /usr/bin/python  /home/pi/sensorbeute/sensoren/temperatureHumidity.py
+* * * * *   /usr/bin/python  /home/pi/sensorbeute/sensoren/temperatureHumidity.py
 ~~~~
 Bitte passt den Pfad zu euren Skripten entsprechend an :)
