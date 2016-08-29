@@ -10,6 +10,7 @@ import multiprocessing
 from collections import OrderedDict
 import Adafruit_DHT
 import datetime
+import time
 from time import sleep
 from math import ceil
 
@@ -19,7 +20,7 @@ os.system('modprobe w1-therm')
 
 base_dir = '/sys/bus/w1/devices/'
 # Save folder where data is written
-save_dir = '/home/pi/data/'
+save_dir = '/home/pi/data'
 
 # ---------------------------------------------------------------------#
 # Setup of DHT11 Sensor
@@ -135,13 +136,17 @@ def logging():
 
     print(folderName)
     try:
-        os.makedirs(folderName, 0o777, exist_ok=False)
-    except OSError:
-        print('Folder existed')
-
+        os.makedirs(folderName, mode=0o777)
+    except OSError, e:
+	if e.errno != 17:
+        	print('Error creating folder: ' + str(e) ) # errno 17= File existed 
+	else: 
+		pass 
     print('Folder created')
     # Form String out of measurement
-    tempString = str(ceil(datetime.datetime.timestamp(actualDateTime)))
+    #tempString = str(ceil(datetime.datetime.timestamp(actualDateTime)))
+    tempString = str(time.mktime(actualDateTime.timetuple()))
+    
     tempString += ', ' + ', '.join("{}".
                                    format(val) for val in ds1820Temps.values())
     tempString += ', ' + ', '.join("{}".
