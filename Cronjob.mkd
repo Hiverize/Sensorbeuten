@@ -8,9 +8,13 @@ Für Menschen, die gerne graphische Oberflächen mögen, gibt es diese Möglichk
 sudo apt-get install gnome-schedule
 
 Jede*r Nutzer*in (auch root) hat einen eigenen Crontab. Dort steht in einer Liste, welche Tasks wann ausgeführt werden sollen. 
-Über die Konsole wird ein Crontab mit folgendem Befehl editiert:
+Über die Konsole wird ein Crontab eines Nutzenden mit folgendem Befehl editiert:
 
 crontab -e
+
+Soll der root crontab editiert werden:
+
+sudo crontab -e
 
 Hier ist eine Anleitung für das Erstellen eines neuen Cronjobs. 
 https://raspberry.tips/raspberrypi-einsteiger/cronjob-auf-dem-raspberry-pi-einrichten/
@@ -18,8 +22,8 @@ https://raspberry.tips/raspberrypi-einsteiger/cronjob-auf-dem-raspberry-pi-einri
 
 Für die Messung von Temperatur und Feuchte haben wir uns für ein Messintervall von 1 Minute entschieden. 
 
-Daher ist unser Cronjob (vom User pi ausgeführt):
+Daher ist unser Cronjob (von root ausgeführt, damit wir Zugriff auf die GPIO haben):
 ~~~~
-*/1 * * * *   pi  /usr/bin/python  /home/pi/sensorbeute/sensoren/temperatureHumidity.py
+*/1 * * * *   root  /usr/bin/python  /home/pi/sensorbeute/sensoren/temperatureHumidity.py
 ~~~~
 Bitte passt den Pfad zu euren Skripten entsprechend an :)
