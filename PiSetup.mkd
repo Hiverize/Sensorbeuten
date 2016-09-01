@@ -1,0 +1,100 @@
+# Den Pi einrichten
+
+Wir haben unseren Code auf der Raspbian Version Jessie 2016-05-27 getestet. Zum Download:
+
+https://www.raspberrypi.org/downloads/raspbian/
+
+Eine Installationsanleitung (in English) findet man hier: https://www.raspberrypi.org/documentation/installation/installing-images/
+
+## Konfigurieren
+Über den Raspberry-Pi-Konfigurator müssen einige Schnittstellen aktiviert werden.
+
+Zum Konfigurator kommt man über Klick auf Menü -> Einstellungen ->Raspberry-Pi-Konfigurator
+oder per Konsole:
+pi@raspberrypi ~ $ sudo raspi-config
+
+Der Konfigurator sieht anders aus, je nach dem, ob man ihn per Klick oder per Konsole aufruft. 
+Erstmal die Anleitung für den Fall, dass ihr per Klick im Konfigurator angekommen seid: 
+
+Falls euer Pi andere Sprache sprechen soll, geht auf den letzten Tab und wählt unter den ersten Menüpunkt eure Lieblingssprache aus. 
+Es ist immer eine gute Idee, das Standardpasswort zu ändern. Geht dazu auf den Tab System und klickt auf den Button Passwort andern... 
+
+Jetzt wählt den Tab Schnittstellen. Hier aktivieren wir: 
+1. Die Kamera, damit wir den Bienenzähler nutzen können.
+2. SSH, damit wir sicher und verschlüsselt übers Internet mit dem Pi kommunizieren und Daten verschicken können. 
+3.Den Eindraht-BUS, über den die Temperatursensoren angeschlossen werden.
+
+OK! Unsere Änderungen erfordern einen Neustart, den verschieben wir aber, denn wir müssen noch ein paar Dinge einrichten. 
+
+###Jetzt noch die Konsolen-Version:
+
+Wenn ihr die Sprache und/oder die Tastaturbelegung ändern wollt, geht unter 5 Internationalisation Options. Es ist auch immer eine gute Idee, das Standadpasswort zu ändern. Das geht unter dem Punkt 2 Change User Passwort.
+
+Danach nehmt noch diese Einstellungen für die Schnittstellen vor: 
+
+1. Unter Punkt 6 die Kamera aktivieren, damit wir den Bienenzähler nutzen können.
+2. Unter Punkt 9 die Adanced Options aufrufen und dort:
+3. Unter Punkt A4 SSH aktivieren, damit wir sicher und verschlüsselt übers Internet mit dem Pi kommunizieren und Daten verschicken können.
+4. Unter Punkt A9 den 1-Wire (Eindraht-BUS) aktivieren, über den die Temperatursensoren angeschlossen werden.
+
+Back und Finish!
+
+## 1-Wire (Eindraht-BUS) für die Temperatursensoren vorbereiten
+
+Die neueren Pi Kernels und Betriebssysteme nutzen einen Device Tree, um das Laden von Modulen und die Resourcenvergabe zwischen Hardwaretreibern zu verwalten. Wir müssen daher die 1-Wire Nutzung im Device Tree anmelden. Dazu schreiben wir in die Datei */boot/config.txt* folgende Zeile: 
+
+dtoverlay=w1-gpio,gpiopin=4,pullup=on
+
+Damit haben wir den Pin 4 für 1-Wire konfiguriert.
+Jetzt muss noch ein Eintrag in die Datei */etc/modules* erfolgen, damit die Module bei jedem Systemstart automatisch geladen werden. Fügt am Ende der Datei Folgendes ein:
+
+    # 1-wire                                                                               
+    w1-gpio pullup=1
+    w1-therm
+
+
+
+## Fehlende Pakete installieren  
+
+Öffnet jetzt eine Konsole, um einige Pakete zu installieren, die wir zum compilieren von Python Erweiterungen brauchen.
+
+    sudo apt-get install build-essential python-dev
+
+Jetzt müssen wir den Pi neu starten.
+
+# Sensorbeuten-Software installieren
+
+Legt einen neuen Ordner an: /home/pi/sensorbeute
+
+Öffnet eine Konsole, wechselt in den neuen Ordner und clont das Sensorbeuten-Repository dort hin.
+
+    cd /home/pi/sensorbeute
+    git clone https://github.com/Hiverize/Sensorbeuten
+    
+Benennt den Ordner von Sensorbeuten in sensoren um.
+    
+## Adafruit-DHT-Library installieren
+
+Wir nutzen die Adafruit-DHT-Library, um auf den DHT-Sensor für Temperatur und Luftfeuchte zuzugreifen. 
+Clont hierfür das entsprechende git in den Ordner /home/pi/sensorbeute
+
+    git clone https://github.com/adafruit/Adafruit_Python_DHT
+       
+Navigiert dann in den Ordner und führt das Setup aus mit:
+
+    cd  /home/pi/sensorbeute/Adafruit_Python_DHT
+    sudo python setup.py install
+
+# Einen Cronjob anlegen
+Wir realisieren momentan die regelmäßigen Messungen über einen Cronjob.
+
+Wir lassen den root-user das Mess-Skript ausführen, da dieser auf die GPIO zugreifen darf. Öffnet den root-crontab mit:
+
+   sudo crontab -e
+
+Tragt folgende Zeile dort ein:
+
+    */1 * * * *   /usr/bin/python  /home/pi/sensorbeute/sensoren/temperatureHumidity.py
+         
+*/1 * * * * bedeutet ein Messinterval von 1 Minute. 
+ 
