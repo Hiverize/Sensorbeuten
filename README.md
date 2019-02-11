@@ -1,10 +1,7 @@
 # Sensorbeuten
-Code um die Sensordaten zu loggen und zu verarbeiten.
+This is the code created by hiverize for smart beehives. It is also used within the Citizen Science Project Bee Observer. 
 
-Momentan ist der Code für die Temperatursensoren (DS1820) und den Temperatur+Feuchte-Sensor (DHT11) getestet und einsatzbereit. 
-Er greift auf die Adafruit-DHT-sensor-library zu, die hier heruntergeladen werden kann:
-https://github.com/adafruit/Adafruit_Python_DHT
+As we use different plattforms, such as Raspberry Pi, BeagleBone and Fipy (ESP32), there are different folders containing code and documentation for each. Please navigate in the folder of your choice and see a full documentation there.  
 
-Eine ausführlichere Anleitung für das Einrichten des Pis findet sich in PiSetup.mkd
 
 
