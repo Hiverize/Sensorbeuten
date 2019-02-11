@@ -1,0 +1,25 @@
+form  { display: table;      }
+label { display: table-cell;
+        padding: 0.5em 1em; }
+input { display: table-cell; }
+
+div { width: 100%; }
+
+#success {
+	background-color: MediumSeaGreen;
+	color: LightGrey;
+}
+
+#warning {
+	background-color: Orange;
+	color: LightGrey;
+}
+
+#error {
+	background-color: Tomato;
+	color: LightGrey;
+}
+
+.ipv4_static {
+	display: none;
+}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Übersicht{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('main.index') }}">Übersicht</a><br />
+    <a href="{{ url_for('network.index') }}">Netzwerk</a><br />
+    <a href="{{ url_for('sensors.index') }}">Sensoren</a><br>
+    <a href="{{ url_for('sensors.calibrate_scale', step=0) }}">Waage kalibrieren</a><br>
+    <a href="{{ url_for('main.download_zip') }}">Download all data</a><br>
+    <a href="{{ url_for('main.restart') }}">Restart</a>
+{% endblock %}

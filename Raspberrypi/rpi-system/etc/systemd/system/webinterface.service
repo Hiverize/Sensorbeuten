@@ -1,0 +1,14 @@
+[Unit]
+Description = Hiverize Webinterface
+After = network.target
+
+[Service]
+User = pi
+Group = pi
+WorkingDirectory = /home/pi/
+ExecStart = /usr/bin/gunicorn3 hiverize.webinterface:app --bind 10.10.10.1:5000
+ExecReload = /bin/kill -s HUP $MAINPID
+ExecStop = /bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy = multi-user.target

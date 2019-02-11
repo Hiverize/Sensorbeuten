@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{ url_for('network.save') }}" method="post">
+
+	<p>
+		<label for="interface_name">Interface:</label>
+		<input type="text" name="interface-name" value="{{ interface_name }}" readonly> 	
+	</p>
+	<p>
+		<label for="name">Name</label>
+		<input type="text" name="id" value="{{ id }}" readonly>
+	</p>
+	{% if interface_name=='wlan0' %}
+		<h3>WLan-Einstellungen</h3>
+		<p>
+			<label for="ssid">SSID:</label>
+			<input type="text" name="ssid" value="{{ ap_info['ssid'] }}" readonly>
+		</p>
+		<p>
+			<label for="encryption">Verschlüsselt:</label>
+			<input type="checkbox" name="encryption"  {{ 'checked' if ap_info['encryption'] else '' }}>
+		</p>
+		{% if ap_info['encryption'] %}
+			<p>
+				<label for="encryption">Schlüsselaustausch:</label>
+				<input type="text" name="key-mgmt" value="{{ ap_info['key-mgmt'] }}" readonly>
+			</p>
+			<p>
+				<label for="psk">Passwort:</label>
+				<input type="text" name="psk">
+			</p>
+		{% endif %}
+	{% endif %}
+	<h3>IPv4 Adresse</h3>
+	<p>
+		<input type="radio" name="ipv4_method" value="auto" onclick="ipv4_box(false)" checked> DHCP
+		<input type="radio" name="ipv4_method" value="manual" onclick="ipv4_box(true)"> Statisch
+	</p>
+	<p class="ipv4_static">
+		<label for="address">Adresse:</label>
+		<input type="text" name="address">
+	</p>
+	<p class="ipv4_static">
+		<label for="prefix">Prefix:</label>
+		<input type="number" name="prefix" value="24">
+	</p>
+	<p class="ipv4_static">
+		<label for="gateway">Gateway:</label>
+		<input type="text" name="gateway">
+	</p>
+	<p class="ipv4_static">
+		<label for="dns">DNS Server:</label>
+		<input type="text" name="dns" value="1.1.1.1">
+	</p>
+	<input type="submit" value="Einrichten">
+</form>
+
+<script>
+	function ipv4_box(visible) {
+		var elements = document.getElementsByClassName("ipv4_static");
+		for (var idx=0; idx<elements.length; idx++) {
+			var item = elements[idx];
+			if (visible) {
+				item.style.display = 'block';
+			}
+			else {
+				item.style.display = 'none';
+			}
+		}
+	}
+</script>
+{% endblock %}

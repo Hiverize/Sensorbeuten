@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Übersicht{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for key, value in measurements.items() %}
+      {{ key }}: {{ value }} <br>
+   {% endfor %}
+{% endblock %}

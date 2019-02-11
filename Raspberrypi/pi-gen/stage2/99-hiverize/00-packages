@@ -1,0 +1,12 @@
+vim
+tmux
+python3-rpi.gpio
+python3-numpy
+python3-flask
+python3-pydbus
+python3-pip
+gunicorn3
+network-manager
+wireless-tools
+dnsmasq
+zip

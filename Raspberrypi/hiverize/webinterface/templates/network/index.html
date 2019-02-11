@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Übersicht{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	{% if hiverize_server_reachable and cloudflare_reachable %}
+		<div id="success">
+			Es ist eine Internetverbindung verfügbar. Das Einrichten des Netzwerks kann übersprungen werden.		
+		</div>
+	{% elif cloudflare_reachable %}
+		<div id="warning">
+			Es ist eine Internetverbindung verfügbar, der Hiverize-Server ist jedoch nicht erreichbar. Das Einrichten des Netzwerks kann übersprungen werden.		
+		</div>
+	{% else %}
+		<div id="error">
+			Es ist keine Internetverbindung verfügbar. Bitte eine Netzwerkverbindung einrichten.<br>
+			Ohne Interverbindung ist nur eine lokale Aufzeichnung der Daten möglich		
+		</div>
+	{% endif %}
+	
+	<div>
+		<b>LAN-Kabel:
+    	{% if eth0_connected %}
+    		verbunden</b><br>
+    		IP-Adresse: 
+    		{% for ipv4 in eth0_ipv4 %}
+    			{{ ipv4.address }}/{{ ipv4.prefix }}
+    		{% endfor %}
+    	{% else %}
+    		nicht verbunden</b>
+    	{% endif %}
+    	<a href="{{ url_for('network.lan_setup') }}" >LAN einrichten</a>
+    </div>
+    
+    <div>
+		<b>WLan:
+		{% if wlan0_connected %}
+    		{% if wlan0_ap %}
+    			Access Point</b>
+    		{% else %}
+    			verbunden</b>
+    		{% endif %}
+    		<br>
+    		IP-Adresse: 
+    		{% for ipv4 in wlan0_ipv4 %}
+    			{{ ipv4.address }}/{{ ipv4.prefix }}
+    		{% endfor %}
+    	{% else %}
+    		nicht verbunden</b>
+    	{% endif %}
+    	<a href="{{ url_for('network.wifi_setup') }}" >WLan einrichten</a>
+	</div>
+	<br>
+{% endblock %}

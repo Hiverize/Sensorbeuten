@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{{ url_for('network.wifi_setup') }}" method="post">
+	{% for ap in ap_list %}
+	<input type="radio" name="ssid" value="{{ ap.ssid }}"> {{ ap.ssid }} <br>
+	{% endfor %}
+	<br>
+	If SSID is not in the list enter the name in the following field:<br>
+	<input type="text" name="hidden_ssid">
+	<br>
+	<input type="submit" value="WLan einrichten">
+</form>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+[Enable NetworkManager]
+Identity=unix-user:pi
+Action=org.freedesktop.NetworkManager.*
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

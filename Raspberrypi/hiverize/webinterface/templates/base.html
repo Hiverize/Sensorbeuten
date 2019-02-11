@@ -1,0 +1,17 @@
+<!doctype html>
+<head>
+<title>{% block title %}{% endblock %} - Hiverize</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  
+{% block content %}{% endblock %}
+<br>
+<a href="{{ url_for('main.index') }}">zur Übersicht</a>
+</body>
+</html>

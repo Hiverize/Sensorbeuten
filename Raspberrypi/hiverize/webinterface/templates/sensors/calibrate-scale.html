@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Übersicht{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if step==0 %}
+        Bitte alles von der Waage nehmen und 'weiter' klicken.
+    {% elif step==1 %}
+        Bitte 1kg auf die Waage stellen und weiter klicken.
+    {% endif %}
+    <br>
+    <a href="{{ url_for('sensors.calibrate_scale', step=step+1) }}">Weiter</a>
+
+{% endblock %}
