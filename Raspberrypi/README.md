@@ -54,9 +54,9 @@ The easiest way to install is by flashing the provided image.
 
 ### Flashing the Hiverize image
 
-Download and extract the image in [`Hiverize-2018-12-16-lite.img.zip`](Hiverize-2018-12-16-lite.img.zip).
+Download and extract the most recent image in <https://seafile.zfn.uni-bremen.de/d/225b749146394c41aa5c/>.
 
-If you don't know how to flash an image use one of the following guides  with the Hiverize image you downloaded instead of a Raspbian image.
+If you don't know how to flash an image use one of the following guides with the Hiverize image you downloaded instead of a Raspbian image.
 
 ***Windows***: See Raspberry installation guide for [Windows](https://www.raspberrypi.org/documentation/installation/installing-images/windows.md)
 
