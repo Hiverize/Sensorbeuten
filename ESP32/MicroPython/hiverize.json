@@ -1,0 +1,23 @@
+{
+    "wlan": {
+        "profiles": {
+            "ap": {
+                "enabled": true,
+                "mode": "AP",
+                "ssid": "hiverize_1",
+                "sec": "WPA2",
+                "key": "bienenprojekt",
+                "channel": 4
+            },
+            "client": {
+                "enabled": false,
+                "mode": "STA",
+                "ssid": "Kodkod",
+                "sec": "WPA2",
+                "key": "bienenprojekt",
+                "timeout": 1000,
+                "config": "dhcp"
+            }
+        }
+    }
+}
